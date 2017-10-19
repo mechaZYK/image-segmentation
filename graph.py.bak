@@ -9,7 +9,7 @@ class Node:
 
 class Forest:
     def __init__(self, num_nodes):
-        self.nodes = [Node(i) for i in range(num_nodes)]
+        self.nodes = [Node(i) for i in xrange(num_nodes)]
         self.num_sets = num_nodes
 
     def size_of(self, i):
@@ -38,7 +38,7 @@ class Forest:
 
     def print_nodes(self):
         for node in self.nodes:
-            print(node)
+            print node
 
 def create_edge(img, width, x, y, x1, y1, diff):
     vertex_id = lambda x, y: y * width + x
@@ -47,8 +47,8 @@ def create_edge(img, width, x, y, x1, y1, diff):
 
 def build_graph(img, width, height, diff, neighborhood_8=False):
     graph = []
-    for y in range(height):
-        for x in range(width):
+    for y in xrange(height):
+        for x in xrange(width):
             if x > 0:
                 graph.append(create_edge(img, width, x, y, x-1, y, diff))
 
