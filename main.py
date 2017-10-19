@@ -1,4 +1,4 @@
-import Image
+from PIL import Image
 import sys
 from graph import build_graph, segment_graph
 from smooth_filter import gaussian_grid, filter_image
@@ -20,12 +20,12 @@ def threshold(size, const):
 
 def generate_image(forest, width, height):
     random_color = lambda: (int(random()*255), int(random()*255), int(random()*255))
-    colors = [random_color() for i in xrange(width*height)]
+    colors = [random_color() for i in range(width*height)]
 
     img = Image.new('RGB', (width, height))
     im = img.load()
-    for y in xrange(height):
-        for x in xrange(width):
+    for y in range(height):
+        for x in range(width):
             comp = forest.find(y * width + x)
             im[x, y] = colors[comp]
 
@@ -33,13 +33,13 @@ def generate_image(forest, width, height):
 
 if __name__ == '__main__':
     if len(sys.argv) != 7:
-        print 'Invalid number of arguments passed.'
-        print 'Correct usage: python main.py sigma neighborhood K min_comp_size input_file output_file'
+        print('Invalid number of arguments passed.')
+        print('Correct usage: python main.py sigma neighborhood K min_comp_size input_file output_file')
     else:
         neighbor = int(sys.argv[2])
         if neighbor != 4 and neighbor!= 8:
-            print 'Invalid neighborhood choosed. The acceptable values are 4 or 8.'
-            print 'Segmenting with 4-neighborhood...'
+            print('Invalid neighborhood choosed. The acceptable values are 4 or 8.')
+            print('Segmenting with 4-neighborhood...')
 
         image_file = Image.open(sys.argv[5])
         sigma = float(sys.argv[1])
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         min_size = int(sys.argv[4])
 
         size = image_file.size
-        print 'Image info: ', image_file.format, size, image_file.mode
+        print('Image info: ', image_file.format, size, image_file.mode)
 
         grid = gaussian_grid(sigma)
 
@@ -71,4 +71,4 @@ if __name__ == '__main__':
         image = generate_image(forest, size[1], size[0])
         image.save(sys.argv[6])
 
-        print 'Number of components: %d' % forest.num_sets
+        print('Number of components: %d' % forest.num_sets)
